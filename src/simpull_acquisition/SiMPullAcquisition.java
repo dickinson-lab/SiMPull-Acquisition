@@ -47,7 +47,7 @@ public class SiMPullAcquisition implements MenuPlugin, SciJavaPlugin {
 
     @Override
     public String getSubMenu() {
-        return "Acquisition Tools";
+        return "Dickinson Lab Plugins";
     }
 
     @Override
