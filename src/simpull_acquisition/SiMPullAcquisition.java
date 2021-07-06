@@ -16,9 +16,9 @@ import org.scijava.plugin.Plugin;
  */
 @Plugin(type = MenuPlugin.class)
 public class SiMPullAcquisition implements MenuPlugin, SciJavaPlugin {
-   public static final String menuName = "SiMPull Acquisition";
+   public static final String menuName = "Static SiMPull Acquisition";
    public static final String tooltipDescription =
-      "Plugin for Automated Acquisition of SiMPull data";
+      "Plugin for Automated Acquisition of Static SiMPull data";
 
    // Provides access to the Micro-Manager Java API (for GUI control and high-
    // level functions).
