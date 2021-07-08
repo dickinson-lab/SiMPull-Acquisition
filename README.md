@@ -17,4 +17,4 @@ Here's the short version:
 
 - From the menu choose Run > Clean and Build to compile the source code.  Copy the resulting .jar file into the ..\Micro-Manager-2.0gamma\mmplugins directory. 
 
-- Launch Micro-Manager.  The acquisition control window should be visible when you select Plugins > Acquisition Tools > SiMPull Acquisition from the Micro-Manager menu.
+- Launch Micro-Manager.  The acquisition control window should be visible when you select Plugins > Dickinson Lab Plugins > SiMPull Acquisition from the Micro-Manager menu.
