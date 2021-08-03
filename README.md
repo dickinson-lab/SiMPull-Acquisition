@@ -1,5 +1,5 @@
 # SiMPull-Acquisition
-Micro-manager plugin for acquiring SiMPull data
+Micro-manager plugin for acquiring static SiMPull data
 
 Building and Installation instructions: 
 see https://micro-manager.org/wiki/Writing_plugins_for_Micro-Manager for details.  
