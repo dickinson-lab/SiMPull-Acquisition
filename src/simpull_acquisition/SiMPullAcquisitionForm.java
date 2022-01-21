@@ -35,6 +35,8 @@ import org.micromanager.display.DisplayWindow;
 
 import ij.ImagePlus;
 import ij.io.FileSaver;
+import org.micromanager.data.Metadata;
+import org.micromanager.data.Pipeline;
 
 /**
  *
@@ -324,12 +326,32 @@ public class SiMPullAcquisitionForm extends JFrame {
             // Set up a Coords.CoordsBuilder for applying coordinates to each image.
             //Coords.CoordsBuilder builder = gui_.data().getCoordsBuilder();
             Coords.Builder builder = Coordinates.builder();
+            
+            // Set up MetadataBuilder for individual image planes
+            Metadata.Builder mb = gui_.data().metadataBuilder();
+            
+            // Set up image processors
+            Pipeline pipeLine = gui_.data().copyApplicationPipeline(store, true);
+            
+            int width = (int) mmc_.getImageWidth();
+            int height = (int) mmc_.getImageHeight();
             int frame = 0;
             while ( mmc_.getRemainingImageCount() > 0 || mmc_.isSequenceRunning(mmc_.getCameraDevice()) ) {
                 if (mmc_.getRemainingImageCount() > 0) {
-                    TaggedImage tagged = mmc_.popNextTaggedImage();
-                    Image image = gui_.data().convertTaggedImage(tagged,builder.c(0).t(frame).p(0).z(0).build(), null);
-                    store.putImage(image);
+                    TaggedImage tagged = mmc_.popNextTaggedImage(); 
+                    Image image = gui_.data().convertTaggedImage(tagged,
+                                                           builder.c(0).t(frame).p(0).z(0).build(), 
+                                                           null);
+                    if (frame != 0) {
+                        //Erase redundant metadata for all but the first frame
+                        image = image.copyWithMetadata(mb.bitDepth(image.getMetadata().getBitDepth()).
+                                                          elapsedTimeMs(image.getMetadata().getElapsedTimeMs(0)).
+                                                          imageNumber(image.getMetadata().getImageNumber()).
+                                                          build() );
+                    }
+                    
+                    pipeLine.insertImage(image); //Pass image to the processor pipeline instead of putting it directly into the dataStore
+                    //store.putImage(image);
                     frame++;
                 } else {
                     mmc_.sleep(Math.min(0.5 * exp, 20));
